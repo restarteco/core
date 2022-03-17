@@ -69,6 +69,11 @@ final class FilterEagerLoadingExtension implements ContextAwareQueryCollectionEx
             return;
         }
 
+        // To force disable subquery
+        if ($this->getBooleanOperationAttribute($resourceClass, ['collection_operation_name' => $operationName], 'disable_eager_subquery', false)) {
+            return;
+        }
+
         $queryBuilderClone = clone $queryBuilder;
         $queryBuilderClone->resetDQLPart('where');
         $changedWhereClause = false;
